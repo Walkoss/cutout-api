@@ -1,0 +1,15 @@
+version: "2"
+services:
+  db:
+    ports:
+        - "3306:3306"
+    volumes:
+        - db-volume:/var/lib/mysql
+  app:
+    volumes:
+        - "~/.composer:/root/.composer"
+  nginx:
+    ports:
+        - "80:80"
+volumes:
+  db-volume:

@@ -1,0 +1,20 @@
+version: "2"
+services:
+  app:
+    build: ./docker/dev/php-fpm
+    links:
+        - db
+    volumes:
+        - ./:/app
+        - /app/var/cache
+        - /app/var/sessions
+  nginx:
+    build: ./docker/dev/nginx
+    volumes_from:
+      - app
+    links:
+      - app
+  db:
+    image: mysql:5.7
+    environment:
+        MYSQL_ROOT_PASSWORD: root
