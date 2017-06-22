@@ -4,7 +4,7 @@
 parameters:
     database_host: db
     database_port: ~
-    database_name: symfony
+    database_name: cutout
     database_user: root
     database_password: root
     # You should uncomment this if you want to use pdo_sqlite
@@ -12,8 +12,14 @@ parameters:
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: ~
+    mailer_user: no-reply@cutout.dev
     mailer_password: ~
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # JWT
+    jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem' # ssh private key path
+    jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
+    jwt_key_pass_phrase:  ''                                         # ssh key pass phrase
+    jwt_token_ttl:        3600
