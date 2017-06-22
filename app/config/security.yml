@@ -1,33 +1,70 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        AppBundle\Entity\Customer:
+            algorithm: bcrypt
+        AppBundle\Entity\Provider:
+            algorithm: bcrypt
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username_email
+        customer_provider:
+            entity:
+                class: AppBundle:Customer
+                property: email
+        provider_provider:
+            entity:
+                class: AppBundle:Provider
+                property: email
+
+    role_hierarchy:
+        ROLE_CUSTOMER:  ROLE_USER
+        ROLE_PROVIDER:  ROLE_USER
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api_login:
-            pattern:  ^/login
+
+        # Customer
+        api_customer_login:
+            pattern:  ^/customers/login
             stateless: true
             anonymous: true
+            provider: customer_provider
             form_login:
-                check_path: /login
-                username_parameter: email
-                password_parameter: password
-                success_handler:  lexik_jwt_authentication.handler.authentication_success
-                failure_handler:  lexik_jwt_authentication.handler.authentication_failure
+                check_path:               /customers/login
                 require_previous_session: false
-            logout: true
-        api:
-            pattern:   ^/
+                username_parameter:       email
+                password_parameter:       password
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        # Provider
+        api_provider_login:
+            pattern:  ^/providers/login
+            stateless: true
+            anonymous: true
+            provider: provider_provider
+            form_login:
+                check_path:               /providers/login
+                require_previous_session: false
+                username_parameter:       email
+                password_parameter:       password
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        api_provider:
+            pattern:  ^/providers
             stateless: true
             lexik_jwt: ~
+            provider: provider_provider
+
+        api_customer:
+            pattern:  ^/customer
+            stateless: true
+            lexik_jwt: ~
+            provider: customer_provider
 
     access_control:
-        - { path: ^/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: login$,       role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/customers,  role: ROLE_CUSTOMER }
+        - { path: ^/providers,  role: ROLE_PROVIDER }

@@ -1,3 +1,9 @@
-app:
-    resource: '@AppBundle/Controller/'
+customers_api:
+    resource: '@AppBundle/Controller/Customer'
     type: rest
+    prefix: /customers
+
+providers_api:
+    resource: '@AppBundle/Controller/Provider'
+    type: rest
+    prefix: /providers
