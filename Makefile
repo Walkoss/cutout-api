@@ -49,7 +49,7 @@ db: vendor
 	$(RUN) $(CONSOLE) doctrine:database:drop --force --if-exists
 	$(RUN) $(CONSOLE) doctrine:database:create --if-not-exists
 	$(RUN) $(CONSOLE) doctrine:migrations:migrate -n
-	# $(RUN) $(CONSOLE) doctrine:fixtures:load -n
+	$(RUN) $(CONSOLE) doctrine:fixtures:load -n
 
 db-diff:        ## Generate a migration by comparing your current database to your mapping information
 db-diff: vendor
