@@ -96,9 +96,17 @@ class Provider implements UserInterface, \Serializable
     /**
      * @var int
      *
-     * @ORM\Column(name="range", type="integer")
+     * @ORM\Column(name="range_distance", type="integer")
      */
     private $range;
+
+    /**
+     * Provider constructor.
+     */
+    public function __construct()
+    {
+        $this->isAvalaible = false;
+    }
 
     /**
      * Get id
