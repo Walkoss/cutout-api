@@ -82,14 +82,14 @@ class Provider implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="siret", type="string", length=255)
+     * @ORM\Column(name="siret", type="string", length=255, nullable=true)
      */
     private $siret;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="iban", type="string", length=255)
+     * @ORM\Column(name="iban", type="string", length=255, nullable=true)
      */
     private $iban;
 

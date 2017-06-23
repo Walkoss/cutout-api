@@ -13,7 +13,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 class LoginController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @Rest\Route(name="login_provider")
+     * @Rest\Route(name="_provider")
      */
     public function postAction()
     {

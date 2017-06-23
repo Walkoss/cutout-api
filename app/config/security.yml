@@ -59,7 +59,7 @@ security:
             provider: provider_provider
 
         api_customer:
-            pattern:  ^/customer
+            pattern:  ^/customers
             stateless: true
             lexik_jwt: ~
             provider: customer_provider
