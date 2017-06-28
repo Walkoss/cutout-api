@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -101,11 +103,19 @@ class Provider implements UserInterface, \Serializable
     private $range;
 
     /**
+     * @var Catalog[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Catalog", mappedBy="provider")
+     */
+    private $catalogs;
+
+    /**
      * Provider constructor.
      */
     public function __construct()
     {
         $this->isAvalaible = false;
+        $this->catalogs = new ArrayCollection();
     }
 
     /**
@@ -410,5 +420,39 @@ class Provider implements UserInterface, \Serializable
     public function getProviderType()
     {
         return $this->providerType;
+    }
+
+    /**
+     * Add catalog
+     *
+     * @param Catalog $catalog
+     *
+     * @return Provider
+     */
+    public function addCatalog(Catalog $catalog)
+    {
+        $this->catalogs[] = $catalog;
+
+        return $this;
+    }
+
+    /**
+     * Remove catalog
+     *
+     * @param Catalog $catalog
+     */
+    public function removeCatalog(Catalog $catalog)
+    {
+        $this->catalogs->removeElement($catalog);
+    }
+
+    /**
+     * Get catalogs
+     *
+     * @return Collection
+     */
+    public function getCatalogs()
+    {
+        return $this->catalogs;
     }
 }
