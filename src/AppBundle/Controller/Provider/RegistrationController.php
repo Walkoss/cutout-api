@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ProviderController extends FOSRestController implements ClassResourceInterface
+class RegistrationController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * Create a new Provider
