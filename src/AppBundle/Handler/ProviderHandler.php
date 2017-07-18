@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProviderHandler
 {
@@ -24,20 +25,26 @@ class ProviderHandler
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
 
     /**
      * ProviderHandler constructor.
      * @param RequestStack $requestStack
      * @param FormFactoryInterface $formFactory
      * @param EntityManager $entityManager
+     * @param UserPasswordEncoderInterface $encoder
      * @internal param RequestStack $request
      * @internal param EntityRepository $entityRepository
      */
-    public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory, EntityManager $entityManager)
+    public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory, EntityManager $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $this->request = $requestStack->getCurrentRequest();
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
+        $this->encoder = $encoder;
     }
 
     public function patch(Provider $provider)
@@ -63,6 +70,10 @@ class ProviderHandler
         $form->submit($this->request->request->all(), 'PATCH' !== $this->request->getMethod());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = $this->encoder->encodePassword($provider, $provider->getPlainPassword());
+            $provider->setPassword($password);
+            $provider->eraseCredentials();
+
             $this->entityManager->persist($provider);
             $this->entityManager->flush();
 
