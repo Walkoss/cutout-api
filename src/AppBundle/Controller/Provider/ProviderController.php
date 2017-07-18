@@ -19,4 +19,9 @@ class ProviderController extends FOSRestController implements ClassResourceInter
     {
         return $providerHandler->patch($provider);
     }
+
+    public function putAction(Provider $provider, ProviderHandler $providerHandler)
+    {
+        return $providerHandler->put($provider);
+    }
 }

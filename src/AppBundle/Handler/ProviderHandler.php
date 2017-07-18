@@ -45,6 +45,11 @@ class ProviderHandler
         return $this->processForm($provider);
     }
 
+    public function put(Provider $provider)
+    {
+        return $this->processForm($provider);
+    }
+
     public function processForm(Provider $provider)
     {
         $form = $this->formFactory->create(
