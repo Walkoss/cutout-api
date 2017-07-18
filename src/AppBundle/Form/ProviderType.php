@@ -40,6 +40,8 @@ class ProviderType extends AbstractType
             ->add('isFreelance', CheckboxType::class)
             ->add('isAvalaible', CheckboxType::class)
             ->add('range', IntegerType::class)
+            ->add('siret', TextType::class)
+            ->add('iban', TextType::class)
             ->add('providerType', TextType::class, [
                 'invalid_message' => 'ProviderType Code is not valid',
             ]);
