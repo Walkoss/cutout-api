@@ -112,6 +112,13 @@ class Provider implements UserInterface, \Serializable
     private $catalogs;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
      * Provider constructor.
      */
     public function __construct()
@@ -456,5 +463,29 @@ class Provider implements UserInterface, \Serializable
     public function getCatalogs()
     {
         return $this->catalogs;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return Provider
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

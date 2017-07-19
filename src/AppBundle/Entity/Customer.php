@@ -66,6 +66,13 @@ class Customer implements UserInterface, \Serializable
      */
     private $lastName;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    private $address;
+
 
     /**
      * Get id
@@ -249,5 +256,29 @@ class Customer implements UserInterface, \Serializable
             $this->email,
             $this->password
             ) = unserialize($serialized);
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return Customer
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

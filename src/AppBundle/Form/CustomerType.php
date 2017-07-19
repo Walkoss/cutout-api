@@ -23,7 +23,8 @@ class CustomerType extends AbstractType
             ->add('plainPassword', PasswordType::class)
             ->add('phone', TextType::class)
             ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class);
+            ->add('lastName', TextType::class)
+            ->add('address', TextType::class);
     }
 
     /**
