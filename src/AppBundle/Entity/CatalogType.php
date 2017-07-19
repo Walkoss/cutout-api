@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CatalogType
  *
  * @ORM\Table(name="catalog_type")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CatalogTypeRepository")
+ * @ORM\Entity()
  */
 class CatalogType
 {

@@ -7,8 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Catalog
  *
- * @ORM\Table(name="catalog")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CatalogRepository")
+ * @ORM\Table(name="catalog",uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_catalog", columns={"catalog_type_id", "gender_type_id", "provider_id"})})
+ * @ORM\Entity()
  */
 class Catalog
 {
