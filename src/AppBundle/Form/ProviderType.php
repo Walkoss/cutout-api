@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,6 +44,7 @@ class ProviderType extends AbstractType
             ->add('siret', TextType::class)
             ->add('iban', TextType::class)
             ->add('address', TextType::class)
+            ->add('descriptiopn', TextareaType::class)
             ->add('providerType', TextType::class, [
                 'invalid_message' => 'ProviderType Code is not valid',
             ]);
