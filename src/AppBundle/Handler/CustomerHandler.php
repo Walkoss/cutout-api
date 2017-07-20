@@ -70,9 +70,11 @@ class CustomerHandler
         $form->submit($this->request->request->all(), 'PATCH' !== $this->request->getMethod());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->encoder->encodePassword($customer, $customer->getPlainPassword());
-            $customer->setPassword($password);
-            $customer->eraseCredentials();
+            if ($customer->getPlainPassword() !== null) {
+                $password = $this->encoder->encodePassword($customer, $customer->getPlainPassword());
+                $customer->setPassword($password);
+                $customer->eraseCredentials();
+            }
 
             $this->entityManager->persist($customer);
             $this->entityManager->flush();

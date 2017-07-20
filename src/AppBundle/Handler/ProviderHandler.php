@@ -70,9 +70,11 @@ class ProviderHandler
         $form->submit($this->request->request->all(), 'PATCH' !== $this->request->getMethod());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->encoder->encodePassword($provider, $provider->getPlainPassword());
-            $provider->setPassword($password);
-            $provider->eraseCredentials();
+            if ($provider->getPlainPassword() !== null) {
+                $password = $this->encoder->encodePassword($provider, $provider->getPlainPassword());
+                $provider->setPassword($password);
+                $provider->eraseCredentials();
+            }
 
             $this->entityManager->persist($provider);
             $this->entityManager->flush();
