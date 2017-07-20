@@ -119,6 +119,13 @@ class Provider implements UserInterface, \Serializable
     private $address;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * Provider constructor.
      */
     public function __construct()
@@ -487,5 +494,29 @@ class Provider implements UserInterface, \Serializable
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Provider
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
