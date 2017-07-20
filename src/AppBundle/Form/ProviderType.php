@@ -44,7 +44,7 @@ class ProviderType extends AbstractType
             ->add('siret', TextType::class)
             ->add('iban', TextType::class)
             ->add('address', TextType::class)
-            ->add('descriptiopn', TextareaType::class)
+            ->add('description', TextareaType::class)
             ->add('providerType', TextType::class, [
                 'invalid_message' => 'ProviderType Code is not valid',
             ]);
