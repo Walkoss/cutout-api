@@ -15,6 +15,14 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
  */
 class ProviderController extends FOSRestController implements ClassResourceInterface
 {
+    /**
+     * @Rest\Get("/me")
+     */
+    public function meAction()
+    {
+        return $this->getUser();
+    }
+
     public function patchAction(Provider $provider, ProviderHandler $providerHandler)
     {
         return $providerHandler->patch($provider);
