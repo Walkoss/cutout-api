@@ -46,6 +46,16 @@ class CatalogHandler
         $this->container = $container;
     }
 
+    public function patch(Catalog $catalog)
+    {
+        return $this->processForm($catalog);
+    }
+
+    public function put(Catalog $catalog)
+    {
+        return $this->processForm($catalog);
+    }
+
     public function post()
     {
         return $this->processForm(new Catalog());
