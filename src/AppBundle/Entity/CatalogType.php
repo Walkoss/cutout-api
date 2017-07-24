@@ -13,7 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class CatalogType
 {
     const COIFFURE = 'COIFFURE';
-
+    const SHAMPOO = 'SHAMPOO';
+    const BRUSHING = 'BRUSHING';
+    
     /**
      * @var int
      *

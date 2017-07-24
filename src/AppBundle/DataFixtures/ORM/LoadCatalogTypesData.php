@@ -15,6 +15,14 @@ class LoadCatalogTypesData extends AbstractFixture implements OrderedFixtureInte
             [
                 'code' => CatalogType::COIFFURE,
                 'label' => 'Coiffure'
+            ],
+            [
+                'code' => CatalogType::SHAMPOO,
+                'label' => 'Shampoing'
+            ],
+            [
+                'code' => CatalogType::BRUSHING,
+                'label' => 'Brushing'
             ]
         ];
 
