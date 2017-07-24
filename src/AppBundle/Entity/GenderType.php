@@ -14,7 +14,7 @@ class GenderType
 {
     const MALE = 'MALE';
     const FEMALE = 'FEMALE';
-    const CHILDREN = 'CHILDREN';
+    const CHILD = 'CHILD';
 
     /**
      * @var int
