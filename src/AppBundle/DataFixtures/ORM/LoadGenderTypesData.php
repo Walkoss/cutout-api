@@ -19,6 +19,10 @@ class LoadGenderTypesData extends AbstractFixture implements OrderedFixtureInter
             [
                 'code' => GenderType::MALE,
                 'label' => 'Homme'
+            ],
+            [
+                'code' => GenderType::CHILDREN,
+                'label' => 'Enfant'
             ]
         ];
 
