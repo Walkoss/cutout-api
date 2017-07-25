@@ -20,7 +20,7 @@ class ProviderController extends FOSRestController implements ClassResourceInter
      * @param ProviderHandler $providerHandler
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @Rest\QueryParam(name="is_available", requirements="(true|false)", description="Search providers available or not")
+     * @Rest\QueryParam(name="is_available", requirements="(true|false)", description="Search providers available or not", default="true")
      *
      * @return mixed
      */
