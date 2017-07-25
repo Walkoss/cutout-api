@@ -119,4 +119,3 @@ class OrderStatus
         return $this->code;
     }
 }
-

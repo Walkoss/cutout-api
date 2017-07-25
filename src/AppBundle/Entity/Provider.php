@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Provider
  *
  * @ORM\Table(name="provider")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProviderRepository")
  * @UniqueEntity(fields={"email"}, message="emailAlreadyUsed")
  */
 class Provider implements UserInterface, \Serializable
@@ -117,6 +117,13 @@ class Provider implements UserInterface, \Serializable
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
+
+    /**
+     * @var Orders[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Orders", mappedBy="provider")
+     */
+    private $orders;
 
     /**
      * @var string
@@ -518,5 +525,39 @@ class Provider implements UserInterface, \Serializable
     public function getIsAvailable()
     {
         return $this->isAvailable;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Orders $order
+     *
+     * @return Provider
+     */
+    public function addOrder(\AppBundle\Entity\Orders $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Orders $order
+     */
+    public function removeOrder(\AppBundle\Entity\Orders $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }
