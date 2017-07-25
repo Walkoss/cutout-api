@@ -39,7 +39,7 @@ class ProviderType extends AbstractType
             ->add('phone', TextType::class)
             ->add('name', TextType::class)
             ->add('isFreelance', CheckboxType::class)
-            ->add('isAvalaible', CheckboxType::class)
+            ->add('isAvailable', CheckboxType::class)
             ->add('range', IntegerType::class)
             ->add('siret', TextType::class)
             ->add('iban', TextType::class)

@@ -71,9 +71,9 @@ class Provider implements UserInterface, \Serializable
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_avalaible", type="boolean")
+     * @ORM\Column(name="is_available", type="boolean")
      */
-    private $isAvalaible;
+    private $isAvailable;
 
     /**
      * @var ProviderType
@@ -130,7 +130,7 @@ class Provider implements UserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->isAvalaible = false;
+        $this->isAvailable = false;
         $this->catalogs = new ArrayCollection();
     }
 
@@ -319,30 +319,6 @@ class Provider implements UserInterface, \Serializable
     }
 
     /**
-     * Set isAvalaible
-     *
-     * @param boolean $isAvalaible
-     *
-     * @return Provider
-     */
-    public function setIsAvalaible($isAvalaible)
-    {
-        $this->isAvalaible = $isAvalaible;
-
-        return $this;
-    }
-
-    /**
-     * Get isAvalaible
-     *
-     * @return boolean
-     */
-    public function getIsAvalaible()
-    {
-        return $this->isAvalaible;
-    }
-
-    /**
      * Set siret
      *
      * @param string $siret
@@ -518,5 +494,29 @@ class Provider implements UserInterface, \Serializable
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set isAvailable
+     *
+     * @param boolean $isAvailable
+     *
+     * @return Provider
+     */
+    public function setIsAvailable($isAvailable)
+    {
+        $this->isAvailable = $isAvailable;
+
+        return $this;
+    }
+
+    /**
+     * Get isAvailable
+     *
+     * @return boolean
+     */
+    public function getIsAvailable()
+    {
+        return $this->isAvailable;
     }
 }

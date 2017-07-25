@@ -4,7 +4,9 @@ namespace AppBundle\Handler;
 
 use AppBundle\Entity\Provider;
 use AppBundle\Form\ProviderType;
+use AppBundle\Helper\MiscTools;
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -45,6 +47,17 @@ class ProviderHandler
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
         $this->encoder = $encoder;
+    }
+
+    public function all(ParamFetcherInterface $paramFetcher)
+    {
+        $filters = MiscTools::managingFilters($paramFetcher);
+
+        if (isset($filters['isAvailable'])) {
+            $filters['isAvailable'] = MiscTools::stringToBool($filters['isAvailable']);
+        }
+
+        return $this->entityManager->getRepository('AppBundle:Provider')->findBy($filters);
     }
 
     public function patch(Provider $provider)
