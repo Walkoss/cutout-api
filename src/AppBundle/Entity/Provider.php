@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Provider
  *
  * @ORM\Table(name="provider")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProviderRepository")
  * @UniqueEntity(fields={"email"}, message="emailAlreadyUsed")
  */
 class Provider implements UserInterface, \Serializable

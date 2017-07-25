@@ -21,6 +21,8 @@ class ProviderController extends FOSRestController implements ClassResourceInter
      * @param ParamFetcherInterface $paramFetcher
      *
      * @Rest\QueryParam(name="is_available", requirements="(true|false)", description="Search providers available or not", default="true")
+     * @Rest\QueryParam(name="gender_type", requirements="\d+", description="GenderType's id")
+     * @Rest\QueryParam(name="catalog_type", requirements="\d+", description="CatalogType's id")
      *
      * @return mixed
      */

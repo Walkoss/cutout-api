@@ -51,13 +51,7 @@ class ProviderHandler
 
     public function all(ParamFetcherInterface $paramFetcher)
     {
-        $filters = MiscTools::managingFilters($paramFetcher);
-
-        if (isset($filters['isAvailable'])) {
-            $filters['isAvailable'] = MiscTools::stringToBool($filters['isAvailable']);
-        }
-
-        return $this->entityManager->getRepository('AppBundle:Provider')->findBy($filters);
+        return $this->entityManager->getRepository('AppBundle:Provider')->getAll(MiscTools::managingFilters($paramFetcher));
     }
 
     public function patch(Provider $provider)
