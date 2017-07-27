@@ -47,16 +47,6 @@ class OrderHandler
         $this->container = $container;
     }
 
-    public function put(Orders $orders)
-    {
-        return $this->processForm($orders);
-    }
-
-    public function patch(Orders $orders)
-    {
-        return $this->processForm($orders);
-    }
-
     public function post()
     {
         return $this->processForm(new Orders());

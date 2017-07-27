@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Provider;
 
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Orders;
+use AppBundle\Entity\Provider;
 use AppBundle\Handler\OrderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -16,13 +17,11 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
  */
 class OrdersController extends FOSRestController implements ClassResourceInterface
 {
-    public function patchAction(Orders $order, OrderHandler $orderHandler)
+    public function cgetAction()
     {
-        return $orderHandler->patch($order);
-    }
+        /** @var Provider $customer */
+        $provider = $this->getUser();
 
-    public function putAction(Orders $order, OrderHandler $orderHandler)
-    {
-        return $orderHandler->put($order);
+        return $provider->getOrders();
     }
 }
