@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Provider;
 
-use AppBundle\Entity\Customer;
 use AppBundle\Entity\Orders;
 use AppBundle\Entity\Provider;
 use AppBundle\Handler\OrderHandler;
@@ -23,5 +22,27 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
         $provider = $this->getUser();
 
         return $provider->getOrders();
+    }
+
+    /**
+     * @param Orders $orders
+     * @param OrderHandler $orderHandler
+     * @Rest\Patch("/orders/{orders}/accept")
+     * @return Orders
+     */
+    public function acceptAction(Orders $orders, OrderHandler $orderHandler)
+    {
+        return $orderHandler->accept($orders);
+    }
+
+    /**
+     * @param Orders $orders
+     * @param OrderHandler $orderHandler
+     * @Rest\Patch("/orders/{orders}/refuse")
+     * @return Orders
+     */
+    public function refuseAction(Orders $orders, OrderHandler $orderHandler)
+    {
+        return $orderHandler->refuse($orders);
     }
 }

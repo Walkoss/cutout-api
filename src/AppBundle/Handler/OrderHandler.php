@@ -47,6 +47,24 @@ class OrderHandler
         $this->container = $container;
     }
 
+    public function accept(Orders $orders)
+    {
+        $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::ACCEPTED);
+        $orders->setOrderStatus($orderStatus);
+        $this->entityManager->flush();
+
+        return $orders;
+    }
+
+    public function refuse(Orders $orders)
+    {
+        $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::REFUSED);
+        $orders->setOrderStatus($orderStatus);
+        $this->entityManager->flush();
+
+        return $orders;
+    }
+
     public function post()
     {
         return $this->processForm(new Orders());
