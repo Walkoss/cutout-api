@@ -27,6 +27,9 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
         return $orderHandler->post();
     }
 
+    /**
+     * @Rest\Get("/orders", name="_customer")
+     */
     public function cgetAction()
     {
         /** @var Customer $customer */
