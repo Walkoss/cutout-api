@@ -81,6 +81,13 @@ class Customer implements UserInterface, \Serializable
     private $orders;
 
     /**
+     * @var Review[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="customer")
+     */
+    private $reviews;
+
+    /**
      * Get id
      *
      * @return int
@@ -327,5 +334,39 @@ class Customer implements UserInterface, \Serializable
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Add review
+     *
+     * @param Review $review
+     *
+     * @return Customer
+     */
+    public function addReview(Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param Review $review
+     */
+    public function removeReview(Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }
