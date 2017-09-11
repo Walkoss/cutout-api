@@ -2,6 +2,7 @@
 
 namespace AppBundle\Handler;
 
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Provider;
 use AppBundle\Form\ProviderType;
 use AppBundle\Helper\MiscTools;
@@ -49,9 +50,13 @@ class ProviderHandler
         $this->encoder = $encoder;
     }
 
-    public function all(ParamFetcherInterface $paramFetcher)
+    public function all(ParamFetcherInterface $paramFetcher, Customer $customer)
     {
-        return $this->entityManager->getRepository('AppBundle:Provider')->getAll(MiscTools::managingFilters($paramFetcher));
+        $filters = MiscTools::managingFilters($paramFetcher);
+        $filters['lat'] = $customer->getLocation()->getLat();
+        $filters['lng'] = $customer->getLocation()->getLng();
+
+        return $this->entityManager->getRepository('AppBundle:Provider')->getAll($filters);
     }
 
     public function patch(Provider $provider)

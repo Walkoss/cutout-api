@@ -26,6 +26,7 @@ reset: stop start
 
 clear:          	## Remove all the cache, the logs, the sessions and the built assets
 clear: perm
+	-$(EXEC) php bin/console cache:clear
 	-$(EXEC) rm -rf var/cache/*
 	-$(EXEC) rm -rf var/sessions/*
 	rm -rf var/logs/*

@@ -28,6 +28,6 @@ class ProviderController extends FOSRestController implements ClassResourceInter
      */
     public function cgetAction(ProviderHandler $providerHandler, ParamFetcherInterface $paramFetcher)
     {
-        return $providerHandler->all($paramFetcher);
+        return $providerHandler->all($paramFetcher, $this->getUser());
     }
 }
