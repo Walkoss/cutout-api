@@ -44,6 +44,7 @@ class LoadProviderData extends AbstractFixture implements ContainerAwareInterfac
         $provider->setPassword($password);
 
         $manager->persist($provider);
+        $this->addReference('PROVIDER_1', $provider);
         $manager->flush();
     }
 
