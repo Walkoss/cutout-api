@@ -38,14 +38,4 @@ class ReviewsController extends FOSRestController implements ClassResourceInterf
 
         return $customer->getReviews();
     }
-
-    /**
-     * @Rest\Get("/providers/{provider}/reviews")
-     * @param Provider $provider
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProviderReviewsAction(Provider $provider)
-    {
-        return $provider->getReviews();
-    }
 }
