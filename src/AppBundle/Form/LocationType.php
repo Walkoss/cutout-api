@@ -3,15 +3,12 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerType extends AbstractType
+class LocationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,12 +16,9 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('plainPassword', PasswordType::class)
-            ->add('phone', TextType::class)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('location', LocationType::class);
+            ->add('address', TextType::class)
+            ->add('lat', NumberType::class)
+            ->add('lng', NumberType::class);
     }
 
     /**
@@ -33,7 +27,7 @@ class CustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Customer',
+            'data_class' => 'AppBundle\Entity\Location',
             'csrf_protection' => false
         ));
     }
@@ -43,6 +37,6 @@ class CustomerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_customer';
+        return 'appbundle_location';
     }
 }

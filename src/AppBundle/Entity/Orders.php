@@ -22,11 +22,10 @@ class Orders
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Location", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $address;
+    private $location;
 
     /**
      * @var OrderStatus
@@ -69,30 +68,6 @@ class Orders
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Orders
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**
@@ -189,5 +164,29 @@ class Orders
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \AppBundle\Entity\Location $location
+     *
+     * @return Orders
+     */
+    public function setLocation(\AppBundle\Entity\Location $location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \AppBundle\Entity\Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

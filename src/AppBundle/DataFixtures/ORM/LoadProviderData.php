@@ -33,7 +33,7 @@ class LoadProviderData extends AbstractFixture implements ContainerAwareInterfac
         $provider->setPhone($faker->phoneNumber);
         $provider->setIban($faker->iban('fr_FR'));
         $provider->setIsFreelance(false);
-        $provider->setAddress($faker->address);
+        $provider->setLocation($this->getReference('LOCATION_1'));
         $provider->setDescription($faker->text);
         $provider->setSiret($faker->siret);
         $provider->setRange(1);

@@ -17,7 +17,7 @@ class OrdersType extends AbstractType
         $builder
             ->add('catalog')
             ->add('provider')
-            ->add('address', TextType::class);
+            ->add('location', LocationType::class);
     }
 
     /**
