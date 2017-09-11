@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Customer;
 
 use AppBundle\Entity\Customer;
+use AppBundle\Entity\Provider;
 use AppBundle\Handler\ReviewHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -36,5 +37,15 @@ class ReviewsController extends FOSRestController implements ClassResourceInterf
         $customer = $this->getUser();
 
         return $customer->getReviews();
+    }
+
+    /**
+     * @Rest\Get("/providers/{provider}/reviews")
+     * @param Provider $provider
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProviderReviewsAction(Provider $provider)
+    {
+        return $provider->getReviews();
     }
 }
