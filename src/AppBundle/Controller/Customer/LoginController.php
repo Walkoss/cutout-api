@@ -4,13 +4,12 @@ namespace AppBundle\Controller\Customer;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 
 /**
  * @RouteResource("login", pluralize=false)
  */
-class LoginController extends FOSRestController implements ClassResourceInterface
+class LoginController extends FOSRestController
 {
     /**
      * @Rest\Route(name="_customer")

@@ -54,8 +54,8 @@ class Orders
     /**
      * @var Catalog
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Catalog")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Catalog", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $catalog;
 

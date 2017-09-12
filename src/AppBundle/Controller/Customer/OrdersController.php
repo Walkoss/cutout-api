@@ -7,14 +7,13 @@ use AppBundle\Entity\Orders;
 use AppBundle\Handler\OrderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 /**
  * Class OrdersController
  * @package AppBundle\Controller\Customer
  * @Rest\RouteResource("orders")
  */
-class OrdersController extends FOSRestController implements ClassResourceInterface
+class OrdersController extends FOSRestController
 {
     /**
      * Create an order
@@ -29,9 +28,11 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+     * Get all order from the authenticated customer
+     *
      * @Rest\Get("/orders", name="_customer")
      */
-    public function cgetAction()
+    public function getAllAction()
     {
         /** @var Customer $customer */
         $customer = $this->getUser();
@@ -40,6 +41,8 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+     * Cancel an order
+     *
      * @param Orders $orders
      * @param OrderHandler $orderHandler
      * @Rest\Patch("/orders/{orders}/cancel")
@@ -51,6 +54,8 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+     * Mark an order as completed
+     *
      * @param Orders $orders
      * @param OrderHandler $orderHandler
      * @Rest\Patch("/orders/{orders}/complete")

@@ -6,12 +6,11 @@ use AppBundle\Entity\Provider;
 use AppBundle\Form\ProviderType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegistrationController extends FOSRestController implements ClassResourceInterface
+class RegistrationController extends FOSRestController
 {
     /**
      * Create a new Provider

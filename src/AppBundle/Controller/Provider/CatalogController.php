@@ -7,14 +7,13 @@ use AppBundle\Entity\Provider;
 use AppBundle\Handler\CatalogHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 /**
  * Class CatalogController
  * @package AppBundle\Controller\Provider
  * @Rest\RouteResource("catalogs")
  */
-class CatalogController extends FOSRestController implements ClassResourceInterface
+class CatalogController extends FOSRestController
 {
     /**
      * Create a catalog
@@ -28,7 +27,13 @@ class CatalogController extends FOSRestController implements ClassResourceInterf
         return $catalogHandler->post();
     }
 
-    public function cgetAction()
+    /**
+     * Get all Catalog from the authenticated provider
+     *
+     * @Rest\Get("/catalogs")
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllAction()
     {
         /** @var Provider $provider */
         $provider = $this->getUser();
@@ -36,6 +41,11 @@ class CatalogController extends FOSRestController implements ClassResourceInterf
         return $provider->getCatalogs();
     }
 
+    /**
+     * Delete a catalog
+     *
+     * @param Catalog $catalog
+     */
     public function deleteAction(Catalog $catalog)
     {
         $em = $this->getDoctrine()->getManager();
@@ -44,11 +54,25 @@ class CatalogController extends FOSRestController implements ClassResourceInterf
         $em->flush();
     }
 
+    /**
+     * Edit a catalog (partially)
+     *
+     * @param Catalog $catalog
+     * @param CatalogHandler $catalogHandler
+     * @return Catalog|string
+     */
     public function patchAction(Catalog $catalog, CatalogHandler $catalogHandler)
     {
         return $catalogHandler->patch($catalog);
     }
 
+    /**
+     * Edit a catalog (fully)
+     *
+     * @param Catalog $catalog
+     * @param CatalogHandler $catalogHandler
+     * @return Catalog|string
+     */
     public function putAction(Catalog $catalog, CatalogHandler $catalogHandler)
     {
         return $catalogHandler->put($catalog);

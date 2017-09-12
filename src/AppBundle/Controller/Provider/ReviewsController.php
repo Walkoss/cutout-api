@@ -12,9 +12,15 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
  * @package AppBundle\Controller\Provider
  * @Rest\RouteResource("reviews")
  */
-class ReviewsController extends FOSRestController implements ClassResourceInterface
+class ReviewsController extends FOSRestController
 {
-    public function cgetAction()
+    /**
+     * Get all reviews from the authenticated provider
+     *
+     * @Rest\Get("/reviews", name="_provider")
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllAction()
     {
         /** @var Provider $provider */
         $provider = $this->getUser();

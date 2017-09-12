@@ -6,16 +6,17 @@ use AppBundle\Handler\ProviderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 /**
  * Class ProviderController
  * @package AppBundle\Controller\Customer
  * @Rest\RouteResource("providers")
  */
-class ProviderController extends FOSRestController implements ClassResourceInterface
+class ProviderController extends FOSRestController
 {
     /**
+     * Get all Provider
+     *
      * @Rest\Get("/providers")
      * @param ProviderHandler $providerHandler
      * @param ParamFetcherInterface $paramFetcher
@@ -26,7 +27,7 @@ class ProviderController extends FOSRestController implements ClassResourceInter
      *
      * @return mixed
      */
-    public function cgetAction(ProviderHandler $providerHandler, ParamFetcherInterface $paramFetcher)
+    public function getAllAction(ProviderHandler $providerHandler, ParamFetcherInterface $paramFetcher)
     {
         return $providerHandler->all($paramFetcher, $this->getUser());
     }

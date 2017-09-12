@@ -6,7 +6,6 @@ use AppBundle\Entity\Customer;
 use AppBundle\Form\CustomerType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -15,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @RouteResource("register", pluralize=false)
  */
-class RegistrationController extends FOSRestController implements ClassResourceInterface
+class RegistrationController extends FOSRestController
 {
     /**
      * Create a new Customer

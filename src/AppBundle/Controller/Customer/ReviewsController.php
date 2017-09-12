@@ -3,18 +3,16 @@
 namespace AppBundle\Controller\Customer;
 
 use AppBundle\Entity\Customer;
-use AppBundle\Entity\Provider;
 use AppBundle\Handler\ReviewHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 /**
  * Class ReviewController
  * @package AppBundle\Controller\Customer
  * @Rest\RouteResource("reviews")
  */
-class ReviewsController extends FOSRestController implements ClassResourceInterface
+class ReviewsController extends FOSRestController
 {
     /**
      * Create a review
@@ -29,9 +27,11 @@ class ReviewsController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * Get all Reviews from the authenticated customer
+     *
      * @Rest\Get("/reviews", name="_customer")
      */
-    public function cgetAction()
+    public function getAllAction()
     {
         /** @var Customer $customer */
         $customer = $this->getUser();

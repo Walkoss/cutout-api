@@ -7,16 +7,20 @@ use AppBundle\Entity\Provider;
 use AppBundle\Handler\OrderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 
 /**
  * Class OrdersController
  * @package AppBundle\Controller\Customer
  * @Rest\RouteResource("orders")
  */
-class OrdersController extends FOSRestController implements ClassResourceInterface
+class OrdersController extends FOSRestController
 {
-    public function cgetAction()
+    /**
+     * Get all Orders from the authenticated provider
+     *
+     * @Rest\Get("/orders", name="_provider")
+     */
+    public function getAllAction()
     {
         /** @var Provider $customer */
         $provider = $this->getUser();
@@ -25,6 +29,8 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+     * Accept an order as a provider
+     *
      * @param Orders $orders
      * @param OrderHandler $orderHandler
      * @Rest\Patch("/orders/{orders}/accept")
@@ -36,6 +42,8 @@ class OrdersController extends FOSRestController implements ClassResourceInterfa
     }
 
     /**
+     * Refuse an order as a provider
+     *
      * @param Orders $orders
      * @param OrderHandler $orderHandler
      * @Rest\Patch("/orders/{orders}/refuse")
