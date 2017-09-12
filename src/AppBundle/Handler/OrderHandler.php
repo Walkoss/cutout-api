@@ -65,6 +65,25 @@ class OrderHandler
         return $orders;
     }
 
+    public function cancel(Orders $orders)
+    {
+        $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::CANCELLED);
+        $orders->setOrderStatus($orderStatus);
+        $this->entityManager->flush();
+
+        return $orders;
+    }
+
+
+    public function complete(Orders $orders)
+    {
+        $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::COMPLETED);
+        $orders->setOrderStatus($orderStatus);
+        $this->entityManager->flush();
+
+        return $orders;
+    }
+
     public function post()
     {
         return $this->processForm(new Orders());
