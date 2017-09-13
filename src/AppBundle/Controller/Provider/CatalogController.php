@@ -7,6 +7,7 @@ use AppBundle\Entity\Provider;
 use AppBundle\Handler\CatalogHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class CatalogController
@@ -45,13 +46,15 @@ class CatalogController extends FOSRestController
      * Delete a catalog
      *
      * @param Catalog $catalog
+     * @param CatalogHandler $catalogHandler
      */
-    public function deleteAction(Catalog $catalog)
+    public function deleteAction(Catalog $catalog, CatalogHandler $catalogHandler)
     {
-        $em = $this->getDoctrine()->getManager();
+        if ($catalog->getProvider() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
 
-        $em->remove($catalog);
-        $em->flush();
+        $catalogHandler->delete($catalog);
     }
 
     /**
@@ -63,6 +66,10 @@ class CatalogController extends FOSRestController
      */
     public function patchAction(Catalog $catalog, CatalogHandler $catalogHandler)
     {
+        if ($catalog->getProvider() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         return $catalogHandler->patch($catalog);
     }
 
@@ -75,6 +82,10 @@ class CatalogController extends FOSRestController
      */
     public function putAction(Catalog $catalog, CatalogHandler $catalogHandler)
     {
+        if ($catalog->getProvider() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         return $catalogHandler->put($catalog);
     }
 }

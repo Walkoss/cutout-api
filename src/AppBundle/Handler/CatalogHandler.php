@@ -51,6 +51,12 @@ class CatalogHandler
         return $this->processForm($catalog);
     }
 
+    public function delete(Catalog $catalog)
+    {
+        $this->entityManager->remove($catalog);
+        $this->entityManager->flush();
+    }
+
     public function put(Catalog $catalog)
     {
         return $this->processForm($catalog);

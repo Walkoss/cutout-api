@@ -6,6 +6,7 @@ use AppBundle\Entity\Provider;
 use AppBundle\Handler\ProviderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class ProviderController
@@ -31,6 +32,10 @@ class ProviderController extends FOSRestController
      */
     public function patchAction(Provider $provider, ProviderHandler $providerHandler)
     {
+        if ($provider !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         return $providerHandler->patch($provider);
     }
 
@@ -43,6 +48,10 @@ class ProviderController extends FOSRestController
      */
     public function putAction(Provider $provider, ProviderHandler $providerHandler)
     {
+        if ($provider !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         return $providerHandler->put($provider);
     }
 }
