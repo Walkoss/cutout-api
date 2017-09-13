@@ -23,3 +23,7 @@ parameters:
     jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
     jwt_key_pass_phrase:  cutoutapi                                  # ssh key pass phrase
     jwt_token_ttl:        3600
+
+    # Stripe
+    stripe_sk_key: sk_test_M3JKWwFNiPpRq8JlOtCR9AQC
+    stripe_pk_key: pk_test_BUQ19u74XIPRnpwdC1gklBtm

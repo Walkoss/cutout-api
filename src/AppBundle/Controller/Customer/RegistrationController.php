@@ -7,6 +7,7 @@ use AppBundle\Form\CustomerType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Stripe\Stripe;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -32,6 +33,14 @@ class RegistrationController extends FOSRestController
         $form->submit($request->request->all());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Create customer on stripe
+            Stripe::setApiKey($this->getParameter('stripe_sk_key'));
+            $stripeCustomer = \Stripe\Customer::create(array(
+                "description" => "Customer for " . $customer->getEmail(),
+                "email" => $customer->getEmail()
+            ));
+            $customer->setStripeId($stripeCustomer->id);
+
             $password = $encoder->encodePassword($customer, $customer->getPlainPassword());
             $customer->setPassword($password);
             $customer->eraseCredentials();

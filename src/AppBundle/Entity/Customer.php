@@ -87,6 +87,20 @@ class Customer implements UserInterface, \Serializable
     private $reviews;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="stripe_id", type="string", length=255, nullable=true)
+     */
+    private $stripeId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token_id", type="string", length=255, nullable=true)
+     */
+    private $tokenId;
+
+    /**
      * Get id
      *
      * @return int
@@ -368,5 +382,53 @@ class Customer implements UserInterface, \Serializable
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set stripeId
+     *
+     * @param string $stripeId
+     *
+     * @return Customer
+     */
+    public function setStripeId($stripeId)
+    {
+        $this->stripeId = $stripeId;
+
+        return $this;
+    }
+
+    /**
+     * Get stripeId
+     *
+     * @return string
+     */
+    public function getStripeId()
+    {
+        return $this->stripeId;
+    }
+
+    /**
+     * Set tokenId
+     *
+     * @param string $tokenId
+     *
+     * @return Customer
+     */
+    public function setTokenId($tokenId)
+    {
+        $this->tokenId = $tokenId;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenId
+     *
+     * @return string
+     */
+    public function getTokenId()
+    {
+        return $this->tokenId;
     }
 }
