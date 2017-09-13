@@ -6,6 +6,7 @@ use AppBundle\Entity\Customer;
 use AppBundle\Handler\CustomerHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class CustomerController
@@ -33,6 +34,10 @@ class CustomerController extends FOSRestController
      */
     public function patchAction(Customer $customer, CustomerHandler $customerHandler)
     {
+        if ($this->getUser() !== $customer) {
+            throw new AccessDeniedException();
+        }
+
         return $customerHandler->patch($customer);
     }
 
@@ -45,6 +50,10 @@ class CustomerController extends FOSRestController
      */
     public function putAction(Customer $customer, CustomerHandler $customerHandler)
     {
+        if ($this->getUser() !== $customer) {
+            throw new AccessDeniedException();
+        }
+
         return $customerHandler->put($customer);
     }
 }

@@ -7,6 +7,7 @@ use AppBundle\Entity\Orders;
 use AppBundle\Handler\OrderHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class OrdersController
@@ -50,6 +51,10 @@ class OrdersController extends FOSRestController
      */
     public function cancelAction(Orders $orders, OrderHandler $orderHandler)
     {
+        if ($this->getUser() !== $orders->getCustomer()) {
+            throw new AccessDeniedException();
+        }
+
         return $orderHandler->cancel($orders);
     }
 
@@ -63,6 +68,10 @@ class OrdersController extends FOSRestController
      */
     public function completeAction(Orders $orders, OrderHandler $orderHandler)
     {
+        if ($this->getUser() !== $orders->getCustomer()) {
+            throw new AccessDeniedException();
+        }
+
         return $orderHandler->complete($orders);
     }
 }
