@@ -6,6 +6,7 @@ use AppBundle\Entity\Customer;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Stripe\Stripe;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Faker\Factory;
@@ -32,6 +33,7 @@ class LoadCustomerData extends AbstractFixture implements ContainerAwareInterfac
         $customer->setPhone($faker->phoneNumber);
         $customer->setLastName($faker->lastName);
         $customer->setLocation($this->getReference('LOCATION_2'));
+        $customer->setStripeId('cus_BOLY8ZYYxx4THh');
 
         $encoder = $this->container->get('security.password_encoder');
         $password = $encoder->encodePassword($customer, 'qwe123');
