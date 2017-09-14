@@ -97,24 +97,15 @@ class OrderHandler
 
     public function cancel(Orders $orders)
     {
-        $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::CANCELLED);
-        $orders->setOrderStatus($orderStatus);
+        if ($orders->getOrderStatus()->getCode() !== OrderStatus::ACCEPTED) {
+            $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::CANCELLED);
+            $orders->setOrderStatus($orderStatus);
 
-        // Check if the customer choose CC payment type or CASH
-        if ($orders->getPayment()->getPaymentType()->getCode() === PaymentType::CC) {
-            // Charge the customer
-            // Authenticate to stripe API
-            Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
-            \Stripe\Refund::create(array(
-                "charge" => $orders->getPayment()->getChargeId(),
-                "reason" => "Order #" . $orders->getId() . " cancelled"
-            ));
+            $paymentStatusCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
+            $orders->getPayment()->setPaymentStatus($paymentStatusCancelled);
+
+            $this->entityManager->flush();
         }
-
-        $paymentStatuCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
-        $orders->getPayment()->setPaymentStatus($paymentStatuCancelled);
-
-        $this->entityManager->flush();
 
         return $orders;
     }
