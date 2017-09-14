@@ -52,6 +52,10 @@ class OrderHandler
     {
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::ACCEPTED);
         $orders->setOrderStatus($orderStatus);
+
+        $paymentStatusUnpaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::UNPAID);
+        $orders->getPayment()->setPaymentStatus($paymentStatusUnpaid);
+
         $this->entityManager->flush();
 
         return $orders;
