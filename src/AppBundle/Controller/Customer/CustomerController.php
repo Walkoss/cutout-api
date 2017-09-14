@@ -6,6 +6,7 @@ use AppBundle\Entity\Customer;
 use AppBundle\Handler\CustomerHandler;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Stripe\Stripe;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -23,6 +24,28 @@ class CustomerController extends FOSRestController
     public function meAction()
     {
         return $this->getUser();
+    }
+
+    /**
+     * Retrieve the customer's credit card
+     *
+     * @Rest\Get("/cards")
+     */
+    public function getCardAction()
+    {
+        /** @var Customer $customer */
+        $customer = $this->getUser();
+
+        $cardId = $customer->getTokenId();
+        if ($cardId !== null) {
+            // Authenticate to stripe API
+            Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
+            $stripeCustomer = \Stripe\Customer::retrieve($customer->getStripeId());
+
+            return $stripeCustomer->sources->retrieve($cardId)->jsonSerialize();
+        }
+
+        return null;
     }
 
     /**
