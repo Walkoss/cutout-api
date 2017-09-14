@@ -62,7 +62,7 @@ class OrderHandler
             Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
             $customer = $orders->getCustomer();
             \Stripe\Charge::create(array(
-                "amount" => $orders->getCatalog()->getPrice(),
+                "amount" => $orders->getCatalog()->getPrice() * 100,
                 "currency" => "eur",
                 "customer" => $customer->getStripeId(),
                 "description" => "Charge for " . $customer->getEmail() . " to " . $orders->getProvider()->getEmail(),
