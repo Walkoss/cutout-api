@@ -5,8 +5,10 @@ namespace AppBundle\Handler;
 use AppBundle\Entity\Orders;
 use AppBundle\Entity\OrderStatus;
 use AppBundle\Entity\PaymentStatus;
+use AppBundle\Entity\PaymentType;
 use AppBundle\Form\OrdersType;
 use Doctrine\ORM\EntityManager;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -53,8 +55,26 @@ class OrderHandler
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::ACCEPTED);
         $orders->setOrderStatus($orderStatus);
 
-        $paymentStatusUnpaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::UNPAID);
-        $orders->getPayment()->setPaymentStatus($paymentStatusUnpaid);
+        // Check if the customer choose CC payment type or CASH
+        if ($orders->getPayment()->getPaymentType()->getCode() === PaymentType::CC) {
+            // Charge the customer
+            // Authenticate to stripe API
+            Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
+            $customer = $orders->getCustomer();
+            \Stripe\Charge::create(array(
+                "amount" => $orders->getCatalog()->getPrice(),
+                "currency" => "eur",
+                "customer" => $customer->getStripeId(),
+                "description" => "Charge for " . $customer->getEmail() . " to " . $orders->getProvider()->getEmail(),
+                "capture" => false
+            ));
+
+            $paymentStatusUncaptured = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::UNCAPTURED);
+            $orders->getPayment()->setPaymentStatus($paymentStatusUncaptured);
+        } else {
+            $paymentStatusUnpaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::UNPAID);
+            $orders->getPayment()->setPaymentStatus($paymentStatusUnpaid);
+        }
 
         $this->entityManager->flush();
 
