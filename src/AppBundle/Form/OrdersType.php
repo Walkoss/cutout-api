@@ -2,8 +2,8 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\DataTransformer\PaymentTypeTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +17,8 @@ class OrdersType extends AbstractType
         $builder
             ->add('catalog')
             ->add('provider')
-            ->add('location', LocationType::class);
+            ->add('location', LocationType::class)
+            ->add('payment', PaymentType::class);
     }
 
     /**

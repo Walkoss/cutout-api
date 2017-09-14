@@ -59,6 +59,11 @@ class Orders
      */
     private $catalog;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Payment", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $payment;
 
     /**
      * Get id
@@ -188,5 +193,29 @@ class Orders
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return Orders
+     */
+    public function setPayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \AppBundle\Entity\Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

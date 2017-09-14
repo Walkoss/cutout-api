@@ -4,6 +4,7 @@ namespace AppBundle\Handler;
 
 use AppBundle\Entity\Orders;
 use AppBundle\Entity\OrderStatus;
+use AppBundle\Entity\PaymentStatus;
 use AppBundle\Form\OrdersType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
@@ -105,6 +106,9 @@ class OrderHandler
             $order->setCustomer($this->getUser());
             $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::PENDING);
             $order->setOrderStatus($orderStatus);
+
+            $paymentStatusPending = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PENDING);
+            $order->getPayment()->setPaymentStatus($paymentStatusPending);
 
             $this->entityManager->persist($order);
             $this->entityManager->flush();
