@@ -61,6 +61,10 @@ class OrderHandler
     {
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::REFUSED);
         $orders->setOrderStatus($orderStatus);
+
+        $paymentStatusCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
+        $orders->getPayment()->setPaymentStatus($paymentStatusCancelled);
+
         $this->entityManager->flush();
 
         return $orders;

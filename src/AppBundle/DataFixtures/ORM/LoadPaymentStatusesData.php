@@ -35,6 +35,10 @@ class LoadPaymentStatusesData extends AbstractFixture implements OrderedFixtureI
             [
                 'code' => PaymentStatus::FAILED,
                 'label' => 'Échoué'
+            ],
+            [
+                'code' => PaymentStatus::CANCELLED,
+                'label' => 'Annulé'
             ]
         ];
 
