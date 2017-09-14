@@ -78,6 +78,10 @@ class OrderHandler
     {
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::CANCELLED);
         $orders->setOrderStatus($orderStatus);
+
+        $paymentStatuCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
+        $orders->getPayment()->setPaymentStatus($paymentStatuCancelled);
+
         $this->entityManager->flush();
 
         return $orders;
@@ -88,6 +92,10 @@ class OrderHandler
     {
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::COMPLETED);
         $orders->setOrderStatus($orderStatus);
+
+        $paymentStatuPaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PAID);
+        $orders->getPayment()->setPaymentStatus($paymentStatuPaid);
+
         $this->entityManager->flush();
 
         return $orders;
