@@ -100,6 +100,17 @@ class OrderHandler
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::CANCELLED);
         $orders->setOrderStatus($orderStatus);
 
+        // Check if the customer choose CC payment type or CASH
+        if ($orders->getPayment()->getPaymentType()->getCode() === PaymentType::CC) {
+            // Charge the customer
+            // Authenticate to stripe API
+            Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
+            \Stripe\Refund::create(array(
+                "charge" => $orders->getPayment()->getChargeId(),
+                "reason" => "Order #" . $orders->getId() . " cancelled"
+            ));
+        }
+
         $paymentStatuCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
         $orders->getPayment()->setPaymentStatus($paymentStatuCancelled);
 
@@ -108,14 +119,25 @@ class OrderHandler
         return $orders;
     }
 
-
     public function complete(Orders $orders)
     {
         $orderStatus = $this->entityManager->getRepository('AppBundle:OrderStatus')->findOneByCode(OrderStatus::COMPLETED);
         $orders->setOrderStatus($orderStatus);
 
-        $paymentStatuPaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PAID);
-        $orders->getPayment()->setPaymentStatus($paymentStatuPaid);
+        // Check if the customer choose CC payment type or CASH
+        if ($orders->getPayment()->getPaymentType()->getCode() === PaymentType::CC) {
+            // Charge the customer
+            // Authenticate to stripe API
+            Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
+            $ch = \Stripe\Charge::retrieve($orders->getPayment()->getChargeId());
+            $ch->capture();
+
+            $paymentStatusCaptured = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CAPTURED);
+            $orders->getPayment()->setPaymentStatus($paymentStatusCaptured);
+        } else {
+            $paymentStatusPaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PAID);
+            $orders->getPayment()->setPaymentStatus($paymentStatusPaid);
+        }
 
         $this->entityManager->flush();
 
