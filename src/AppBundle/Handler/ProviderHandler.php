@@ -50,11 +50,14 @@ class ProviderHandler
         $this->encoder = $encoder;
     }
 
-    public function all(ParamFetcherInterface $paramFetcher, Customer $customer)
+    public function all(ParamFetcherInterface $paramFetcher)
     {
         $filters = MiscTools::managingFilters($paramFetcher);
-        $filters['lat'] = $customer->getLocation()->getLat();
-        $filters['lng'] = $customer->getLocation()->getLng();
+
+        if (!isset($filters['lat']) || !isset($filters['lng'])) {
+            $filters['lat'] = $customer->getLocation()->getLat();
+            $filters['lng'] = $customer->getLocation()->getLng();
+        }
 
         return $this->entityManager->getRepository('AppBundle:Provider')->getAll($filters);
     }

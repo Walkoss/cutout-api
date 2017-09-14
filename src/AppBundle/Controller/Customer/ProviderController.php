@@ -24,11 +24,13 @@ class ProviderController extends FOSRestController
      * @Rest\QueryParam(name="is_available", requirements="(true|false)", description="Search providers available or not", default="true")
      * @Rest\QueryParam(name="gender_type", requirements="\d+", description="GenderType's id")
      * @Rest\QueryParam(name="catalog_type", requirements="\d+", description="CatalogType's id")
+     * @Rest\QueryParam(name="lat", description="Latitude")
+     * @Rest\QueryParam(name="lng", description="Longitude")
      *
      * @return mixed
      */
     public function getAllAction(ProviderHandler $providerHandler, ParamFetcherInterface $paramFetcher)
     {
-        return $providerHandler->all($paramFetcher, $this->getUser());
+        return $providerHandler->all($paramFetcher);
     }
 }
