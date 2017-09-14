@@ -61,13 +61,14 @@ class OrderHandler
             // Authenticate to stripe API
             Stripe::setApiKey($this->container->getParameter('stripe_sk_key'));
             $customer = $orders->getCustomer();
-            \Stripe\Charge::create(array(
+            $charge = \Stripe\Charge::create(array(
                 "amount" => $orders->getCatalog()->getPrice() * 100,
                 "currency" => "eur",
                 "customer" => $customer->getStripeId(),
                 "description" => "Charge for " . $customer->getEmail() . " to " . $orders->getProvider()->getEmail(),
                 "capture" => false
             ));
+            $orders->getPayment()->setChargeId($charge->id);
 
             $paymentStatusUncaptured = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::UNCAPTURED);
             $orders->getPayment()->setPaymentStatus($paymentStatusUncaptured);

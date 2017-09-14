@@ -38,6 +38,13 @@ class Payment
     private $paymentType;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="charge_id", nullable=true, length=255)
+     */
+    private $chargeId;
+
+    /**
      * Get id
      *
      * @return int
@@ -117,5 +124,29 @@ class Payment
     public function getPaymentType()
     {
         return $this->paymentType;
+    }
+
+    /**
+     * Set chargeId
+     *
+     * @param string $chargeId
+     *
+     * @return Payment
+     */
+    public function setChargeId($chargeId)
+    {
+        $this->chargeId = $chargeId;
+
+        return $this;
+    }
+
+    /**
+     * Get chargeId
+     *
+     * @return string
+     */
+    public function getChargeId()
+    {
+        return $this->chargeId;
     }
 }
