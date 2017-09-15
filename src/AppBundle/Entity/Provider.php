@@ -139,6 +139,13 @@ class Provider implements UserInterface, \Serializable
     private $reviews;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="device_id", type="string", length=255, nullable=true)
+     */
+    private $deviceId;
+
+    /**
      * Provider constructor.
      */
     public function __construct()
@@ -599,5 +606,29 @@ class Provider implements UserInterface, \Serializable
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set deviceId
+     *
+     * @param string $deviceId
+     *
+     * @return Provider
+     */
+    public function setDeviceId($deviceId)
+    {
+        $this->deviceId = $deviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceId
+     *
+     * @return string
+     */
+    public function getDeviceId()
+    {
+        return $this->deviceId;
     }
 }

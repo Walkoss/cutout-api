@@ -23,7 +23,8 @@ class CustomerType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('location', LocationType::class)
-            ->add('tokenId', TextType::class);
+            ->add('tokenId', TextType::class)
+            ->add('deviceId', TextType::class);
     }
 
     /**

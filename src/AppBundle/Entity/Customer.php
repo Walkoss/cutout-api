@@ -101,6 +101,13 @@ class Customer implements UserInterface, \Serializable
     private $tokenId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="device_id", type="string", length=255, nullable=true)
+     */
+    private $deviceId;
+
+    /**
      * Get id
      *
      * @return int
@@ -430,5 +437,29 @@ class Customer implements UserInterface, \Serializable
     public function getTokenId()
     {
         return $this->tokenId;
+    }
+
+    /**
+     * Set deviceId
+     *
+     * @param string $deviceId
+     *
+     * @return Customer
+     */
+    public function setDeviceId($deviceId)
+    {
+        $this->deviceId = $deviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceId
+     *
+     * @return string
+     */
+    public function getDeviceId()
+    {
+        return $this->deviceId;
     }
 }
