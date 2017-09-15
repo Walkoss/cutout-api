@@ -54,11 +54,6 @@ class ProviderHandler
     {
         $filters = MiscTools::managingFilters($paramFetcher);
 
-        if (!isset($filters['lat']) || !isset($filters['lng'])) {
-            $filters['lat'] = $customer->getLocation()->getLat();
-            $filters['lng'] = $customer->getLocation()->getLng();
-        }
-
         return $this->entityManager->getRepository('AppBundle:Provider')->getAll($filters);
     }
 

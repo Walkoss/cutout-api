@@ -32,7 +32,6 @@ class LoadCustomerData extends AbstractFixture implements ContainerAwareInterfac
         $customer->setFirstName($faker->firstName);
         $customer->setPhone($faker->phoneNumber);
         $customer->setLastName($faker->lastName);
-        $customer->setLocation($this->getReference('LOCATION_2'));
         $customer->setStripeId('cus_BOLY8ZYYxx4THh');
 
         $encoder = $this->container->get('security.password_encoder');

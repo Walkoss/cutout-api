@@ -19,12 +19,15 @@ class ProviderRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('provider')
             ->join('provider.catalogs', 'catalogs')
             ->join('catalogs.catalogType', 'catalogType')
-            ->join('catalogs.genderType', 'genderType')
-            ->join('provider.location', 'location')
-            ->addSelect('GEO_DISTANCE(location.lat, location.lng, :latCustomer, :lngCustomer) as HIDDEN distance')
-            ->having('distance <= provider.range')
-            ->setParameter('latCustomer', $filters['lat'])
-            ->setParameter('lngCustomer', $filters['lng']);
+            ->join('catalogs.genderType', 'genderType');
+
+        if (!empty($filters['lat']) && !empty($filters['lng'])) {
+            $queryBuilder->join('provider.location', 'location')
+                ->addSelect('GEO_DISTANCE(location.lat, location.lng, :latCustomer, :lngCustomer) as HIDDEN distance')
+                ->having('distance <= provider.range')
+                ->setParameter('latCustomer', $filters['lat'])
+                ->setParameter('lngCustomer', $filters['lng']);
+        }
 
         if (!empty($filters['isAvailable'])) {
             $isAvailable = MiscTools::stringToBool($filters['isAvailable']);

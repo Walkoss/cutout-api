@@ -67,12 +67,6 @@ class Customer implements UserInterface, \Serializable
     private $lastName;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Location", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $location;
-
-    /**
      * @var Orders[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Orders", mappedBy="customer")
@@ -358,30 +352,6 @@ class Customer implements UserInterface, \Serializable
     public function getReviews()
     {
         return $this->reviews;
-    }
-
-    /**
-     * Set location
-     *
-     * @param \AppBundle\Entity\Location $location
-     *
-     * @return Customer
-     */
-    public function setLocation(\AppBundle\Entity\Location $location)
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return \AppBundle\Entity\Location
-     */
-    public function getLocation()
-    {
-        return $this->location;
     }
 
     /**
