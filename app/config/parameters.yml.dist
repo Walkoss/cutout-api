@@ -27,3 +27,6 @@ parameters:
     # Stripe
     stripe_sk_key: sk_test_M3JKWwFNiPpRq8JlOtCR9AQC
     stripe_pk_key: pk_test_BUQ19u74XIPRnpwdC1gklBtm
+
+    # FCM API
+    fcm_api_key: AAAAeIXCkcw:APA91bGH3mx0C_hyhKy89DLJZibbP5k87kFBVgYxseZYeV0NJ4g4rGSK10oPb3xaUI4dgF2CEdpAwXUjDEbBdBt4BoYXezkdlB2MB1bQD6hwHJo7RZWxUtzueWCae0losalq7aVi_hUz

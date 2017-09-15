@@ -6,6 +6,7 @@ use AppBundle\Entity\Orders;
 use AppBundle\Entity\OrderStatus;
 use AppBundle\Entity\PaymentStatus;
 use AppBundle\Entity\PaymentType;
+use AppBundle\FCM\FCMApi;
 use AppBundle\Form\OrdersType;
 use Doctrine\ORM\EntityManager;
 use Stripe\Stripe;
@@ -32,6 +33,10 @@ class OrderHandler
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var FCMApi
+     */
+    private $fcpApi;
 
     /**
      * ProviderHandler constructor.
@@ -39,15 +44,17 @@ class OrderHandler
      * @param FormFactoryInterface $formFactory
      * @param EntityManager $entityManager
      * @param ContainerInterface $container
+     * @param FCMApi $fcpApi
      * @internal param RequestStack $request
      * @internal param EntityRepository $entityRepository
      */
-    public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory, EntityManager $entityManager, ContainerInterface $container)
+    public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory, EntityManager $entityManager, ContainerInterface $container, FCMApi $fcpApi)
     {
         $this->request = $requestStack->getCurrentRequest();
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
         $this->container = $container;
+        $this->fcpApi = $fcpApi;
     }
 
     public function accept(Orders $orders)
@@ -77,6 +84,9 @@ class OrderHandler
             $orders->getPayment()->setPaymentStatus($paymentStatusUnpaid);
         }
 
+        // Send a notification push to the provider/customer
+        $this->sendNotificationPush($orders);
+
         $this->entityManager->flush();
 
         return $orders;
@@ -89,6 +99,9 @@ class OrderHandler
 
         $paymentStatusCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
         $orders->getPayment()->setPaymentStatus($paymentStatusCancelled);
+
+        // Send a notification push to the provider/customer
+        $this->sendNotificationPush($orders);
 
         $this->entityManager->flush();
 
@@ -103,6 +116,9 @@ class OrderHandler
 
             $paymentStatusCancelled = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::CANCELLED);
             $orders->getPayment()->setPaymentStatus($paymentStatusCancelled);
+
+            // Send a notification push to the provider/customer
+            $this->sendNotificationPush($orders);
 
             $this->entityManager->flush();
         }
@@ -129,6 +145,9 @@ class OrderHandler
             $paymentStatusPaid = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PAID);
             $orders->getPayment()->setPaymentStatus($paymentStatusPaid);
         }
+
+        // Send a notification push to the provider/customer
+        $this->sendNotificationPush($orders);
 
         $this->entityManager->flush();
 
@@ -160,6 +179,9 @@ class OrderHandler
             $paymentStatusPending = $this->entityManager->getRepository('AppBundle:PaymentStatus')->findOneByCode(PaymentStatus::PENDING);
             $order->getPayment()->setPaymentStatus($paymentStatusPending);
 
+            // Send a notification push to the provider/customer
+            $this->sendNotificationPush($order);
+
             $this->entityManager->persist($order);
             $this->entityManager->flush();
 
@@ -167,5 +189,49 @@ class OrderHandler
         }
 
         return (string)$form->getErrors(true);
+    }
+
+    private function sendNotificationPush(Orders $order)
+    {
+        $customerDeviceId = $order->getCustomer()->getDeviceId();
+        $providerDeviceId = $order->getProvider()->getDeviceId();
+
+        // TODO: OrderStatus::PENDING CANCELLED
+        switch ($order->getOrderStatus()->getCode()) {
+            case OrderStatus::ACCEPTED:
+                $this->sendAcceptedNoticationPush($order, $customerDeviceId);
+                break;
+            case OrderStatus::REFUSED:
+                $this->sendRefusedNoticationPush($order, $customerDeviceId);
+                break;
+        }
+    }
+
+    private function sendAcceptedNoticationPush(Orders $order, $deviceId)
+    {
+        if ($deviceId !== null) {
+            $this->fcpApi->sendNotification($deviceId,
+                [
+                    "title" => "Demande acceptée",
+                    "body" => $order->getProvider()->getName() . " a accepté votre demande de prestation",
+                    "sound" => "default",
+                    "icon" => "icon"
+                ]
+            );
+        }
+    }
+
+    private function sendRefusedNoticationPush(Orders $order, $deviceId)
+    {
+        if ($deviceId !== null) {
+            $this->fcpApi->sendNotification($deviceId,
+                [
+                    "title" => "Demande refusée",
+                    "body" => $order->getProvider()->getName() . " a refusé votre demande de prestation",
+                    "sound" => "default",
+                    "icon" => "icon"
+                ]
+            );
+        }
     }
 }
