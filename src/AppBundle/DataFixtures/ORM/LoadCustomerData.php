@@ -38,6 +38,8 @@ class LoadCustomerData extends AbstractFixture implements ContainerAwareInterfac
         $password = $encoder->encodePassword($customer, 'qwe123');
         $customer->setPassword($password);
 
+        $this->addReference('CUSTOMER_1', $customer);
+
         $manager->persist($customer);
         $manager->flush();
     }

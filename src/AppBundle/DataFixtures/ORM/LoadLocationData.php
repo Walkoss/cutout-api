@@ -21,6 +21,11 @@ class LoadLocationData extends AbstractFixture implements OrderedFixtureInterfac
                 'address' => '26 Place de la Chapelle, 75018 Paris, France',
                 'lat' => 48.8849736,
                 'lng' => 2.3587068
+            ],
+            [
+                'address' => '1 Square Chabrier, 95400 Villiers-le-bel, France',
+                'lat' => 49.0046869,
+                'lng' => 2.3995064
             ]
         ];
 
