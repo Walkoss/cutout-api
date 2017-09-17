@@ -26,6 +26,16 @@ class LoadLocationData extends AbstractFixture implements OrderedFixtureInterfac
                 'address' => '1 Square Chabrier, 95400 Villiers-le-bel, France',
                 'lat' => 49.0046869,
                 'lng' => 2.3995064
+            ],
+            [
+                'address' => '1 Square Chabrier, 95400 Villiers-le-bel, France',
+                'lat' => 49.0046869,
+                'lng' => 2.3995064
+            ],
+            [
+                'address' => '1 Square Chabrier, 95400 Villiers-le-bel, France',
+                'lat' => 49.0046869,
+                'lng' => 2.3995064
             ]
         ];
 

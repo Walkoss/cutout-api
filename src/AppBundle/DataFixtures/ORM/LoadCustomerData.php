@@ -25,22 +25,26 @@ class LoadCustomerData extends AbstractFixture implements ContainerAwareInterfac
 
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create('fr_FR');
-        $customer = new Customer();
+        for ($i = 1; $i <= 2; $i++) {
+            $faker = Factory::create('fr_FR');
+            $customer = new Customer();
 
-        $customer->setEmail('customer@cutout.dev');
-        $customer->setFirstName($faker->firstName);
-        $customer->setPhone($faker->phoneNumber);
-        $customer->setLastName($faker->lastName);
-        $customer->setStripeId('cus_BOLY8ZYYxx4THh');
+            $customer->setEmail('customer'. $i . '@cutout.dev');
+            $customer->setFirstName($faker->firstName);
+            $customer->setPhone($faker->phoneNumber);
+            $customer->setLastName($faker->lastName);
+            $customer->setStripeId('cus_BOLY8ZYYxx4THh');
 
-        $encoder = $this->container->get('security.password_encoder');
-        $password = $encoder->encodePassword($customer, 'qwe123');
-        $customer->setPassword($password);
+            $encoder = $this->container->get('security.password_encoder');
+            $password = $encoder->encodePassword($customer, 'qwe123');
+            $customer->setPassword($password);
+            $customer->setLocation($this->getReference('LOCATION_' . $i));
 
-        $this->addReference('CUSTOMER_1', $customer);
+            $this->addReference('CUSTOMER_' . $i, $customer);
 
-        $manager->persist($customer);
+            $manager->persist($customer);
+        }
+
         $manager->flush();
     }
 

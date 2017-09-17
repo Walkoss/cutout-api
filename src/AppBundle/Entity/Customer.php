@@ -95,6 +95,12 @@ class Customer implements UserInterface, \Serializable
     private $tokenId;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Location", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $location;
+
+    /**
      * Get id
      *
      * @return int
@@ -400,5 +406,29 @@ class Customer implements UserInterface, \Serializable
     public function getTokenId()
     {
         return $this->tokenId;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \AppBundle\Entity\Location $location
+     *
+     * @return Customer
+     */
+    public function setLocation(\AppBundle\Entity\Location $location = null)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \AppBundle\Entity\Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

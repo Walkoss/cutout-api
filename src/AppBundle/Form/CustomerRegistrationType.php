@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerType extends AbstractType
+class CustomerRegistrationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,6 @@ class CustomerType extends AbstractType
             ->add('phone', TextType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('location', LocationType::class)
             ->add('tokenId', TextType::class);
     }
 

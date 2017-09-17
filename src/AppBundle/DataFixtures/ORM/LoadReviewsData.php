@@ -15,7 +15,7 @@ class LoadReviewsData extends AbstractFixture implements OrderedFixtureInterface
             [
                 'mark' => 5,
                 'review' => 'Très belle prestation !',
-                'customer' => $this->getReference('CUSTOMER_1'),
+                'customer' => $this->getReference('CUSTOMER_2'),
                 'provider' => $this->getReference('PROVIDER_1')
             ],
             [

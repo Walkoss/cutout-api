@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Customer;
 
 use AppBundle\Entity\Customer;
-use AppBundle\Form\CustomerType;
+use AppBundle\Form\CustomerRegistrationType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -29,7 +29,7 @@ class RegistrationController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
         $customer = new Customer();
-        $form = $this->createForm(CustomerType::class, $customer);
+        $form = $this->createForm(CustomerRegistrationType::class, $customer);
         $form->submit($request->request->all());
 
         if ($form->isSubmitted() && $form->isValid()) {
